@@ -17,7 +17,7 @@ let tieCount = 0;
 // Create a list with the choices available to play (choices)
 const choices = ["rock", "paper", "scissors"];
 // Create switch variable to keep the game active or close it.(keepPlaying)
-let keepPlaying = true;
+let keepPlaying = false;
 
 function compareChosenOptions(userOption, computerOption) {
     //     Compare userChoice and computerChoice:

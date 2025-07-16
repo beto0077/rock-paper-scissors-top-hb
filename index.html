@@ -1,11 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <title>Rock Paper Scissors</title>
 </head>
+
 <body>
+    <header class="site-header">
+        <p>TOP H. Beck</p>
+    </header>
+    <main>
+        <section class="game-panel">
+            <h1 class="game-title">Rock Paper Scissors</h1>
+
+            <button id="start-button">Start</button>
+
+            <form id="round-form" class="round-form">
+                <label for="round-count">Welcome to the Rock, Paper, Scissors game created by Haakon Beck.<br>
+                    Please indicate how many rounds you would like to play in total:
+                </label>
+                <input type="number" id="round-count" name="round-count" min="1" required />
+                <button type="submit" id="confirm-rounds-button">Confirm</button>
+            </form>
+
+            <div class="rps-buttons">
+                <button class="choice-button" data-choice="rock">Rock</button>
+                <button class="choice-button" data-choice="paper">Paper</button>
+                <button class="choice-button" data-choice="scissors">Scissors</button>
+            </div>
+        </section>
+
+        <section class="results-panel">
+            <h2 class="results-title">Results:</h2>
+            <!-- Displays statistics for the current round, game statistics, and the final game result -->
+            <p id="round-result"></p>
+            <p id="game-stats"></p>
+            <p id="final-result"></p>
+        </section>
+    </main>
+    <footer class="site-footer">Copyright &copy; TOP - H. Beck Journey 2025</footer>
     <script src="./script.js"></script>
 </body>
+
 </html>
