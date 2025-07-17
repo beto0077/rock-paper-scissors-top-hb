@@ -1,113 +1,118 @@
-console.log("FML bro, IWTD so badly...");
-
 // **GAME STARTS RUNNING**
+const startButton = document.querySelector("#start-button");
+const roundForm = document.querySelector("#round-form");
+const roundCount = document.querySelector("#round-count");
+const rpsButtons = document.querySelector(".rps-buttons");
+const choiceButtons = document.querySelectorAll(".choice-button");
+const resultsPanel = document.querySelector(".results-panel");
+const roundResult = document.querySelector("#round-result");
+const gameStats = document.querySelector("#game-stats");
+const finalResult = document.querySelector("#final-result");
 
-// Create a variable for the user's answer (userChoice).
-let userChoice = 0;
-// Create a variable for the computer's answer (computerChoice).
-let computerChoice = 0;
-// Create a variable for the number of rounds to play (totalRounds).
+let userChoice = "";
+let computerChoice = "";
+let currentRound = 0;
 let totalRounds = 0;
-// Create a counter for user wins (userScore).
 let userScore = 0;
-// Create a counter for computer wins (computerScore).
 let computerScore = 0;
-// Create a counter for ties (tieCount).
 let tieCount = 0;
-// Create a list with the choices available to play (choices)
-const choices = ["rock", "paper", "scissors"];
-// Create switch variable to keep the game active or close it.(keepPlaying)
-let keepPlaying = false;
+const rpsChoices = ["rock", "paper", "scissors"];
+
+function capitalizeFirstLetter(word) {
+    return word.replace(word.charAt(0), word.charAt(0).toUpperCase());
+};
+
+function handleRoundFormSubmit(e) {
+    e.preventDefault();
+    totalRounds = roundCount.value;
+    roundCount.value = "";
+    roundForm.style.display = "none"
+    rpsButtons.style.display = "block"
+}
+
+function showCurrentRoundWinner(winner) {
+    //If the value received is true, the computer won the round, if the value received is false, the user won the round.
+    let userWonRound = `The user won this round, ${userChoice} beats ${computerChoice}`;
+    let computerWonRound = `The computer won this round, ${computerChoice} beats ${userChoice}`;
+    winner ? roundResult.textContent = computerWonRound : roundResult.textContent = userWonRound;
+}
 
 function compareChosenOptions(userOption, computerOption) {
-    //     Compare userChoice and computerChoice:
-    //         If user beats computer, increment userScore.
-    //         Else if computer beats user, increment computerScore.
-    //         Else, increment tieCount.
-    switch (userOption) {
-        case 1:
-            if (computerOption == 1) {
-                tieCount++;
-            } else {
-                computerOption == 2 ? computerScore++ : userScore++;
-            }
-            break;
-        case 2:
-            if (computerOption == 2) {
-                tieCount++;
-            } else {
-                computerOption == 3 ? computerScore++ : userScore++;
-            }
-            break;
-        case 3:
-            if (computerOption == 3) {
-                tieCount++;
-            } else {
-                computerOption == 1 ? computerScore++ : userScore++;
-            }
-            break;
-        default:
-            break;
+    if (userOption === computerOption) {
+        let currentRoundTied = `Both players made the same choice, so this round is a tie. User chose ${userOption} and computer chose ${computerOption}.`;
+        roundResult.textContent = currentRoundTied;
+        tieCount++;
+    } else {
+        switch (userOption) {
+            case "rock":
+                computerOption === "paper" ? computerScore++ : userScore++;
+                showCurrentRoundWinner(computerOption === "paper");
+                break;
+            case "paper":
+                computerOption === "scissors" ? computerScore++ : userScore++;
+                showCurrentRoundWinner(computerOption === "scissors");
+                break;
+            case "scissors":
+                computerOption === "rock" ? computerScore++ : userScore++;
+                showCurrentRoundWinner(computerOption === "rock");
+                break;
+            default:
+                console.log("Something strange is going on here bro...");
+                break;
+        }
     }
+    let currentStatistics = `User score: ${userScore} | Computer score: ${computerScore} | Tied rounds: ${tieCount}`;
+    gameStats.textContent = currentStatistics;
 }
 
 function showGameWinner(userData, computerData, tieData) {
-    // After all rounds:
-    //     If userScore > computerScore:
-    //         Display final statistics and declare the user as the winner.
-    //     Else if computerScore > userScore:
-    //         Display final statistics and declare the computer as the winner.
-    //     Else:
-    //         Display final statistics and declare a tie.
+    rpsButtons.style.display = "none";
+    startButton.style.display = "block";
+    gameStats.textContent = "";
     let userWin = `The user has won the game, congratulations! \nUser score: ${userData} | Computer score: ${computerData} | Tied rounds: ${tieData}`;
     let computerWin = `The computer has won the game, better luck next time. \nUser score: ${userData} | Computer score: ${computerData} | Tied rounds: ${tieData}`;
+    let tieEndGame = `The game ended in a tie, both players have the same score at the end of the total number of rounds played. \nUser score: ${userData} | Computer score: ${computerData} | Tied rounds: ${tieData}`;
     if (userData == computerData) {
-        console.log(`The game ended in a tie, both players have the same score at the end of the total number of rounds played. \nUser score: ${userData} | Computer score: ${computerData} | Tied rounds: ${tieData}`);
-        alert(`The game ended in a tie, both players have the same score at the end of the total number of rounds played. \nUser score: ${userData} | Computer score: ${computerData} | Tied rounds: ${tieData}`);
+        console.log(tieEndGame);
+        finalResult.textContent = tieEndGame;
     } else if (userData > computerData) {
         console.log(userWin);
-        alert(userWin);
+        finalResult.textContent = userWin;
     } else {
         console.log(computerWin);
-        alert(computerWin);
+        finalResult.textContent = computerWin;
     }
 }
 
-function runGame() {
-    // Ask the user to choose a number of rounds to play from the available options.
-    // Set totalRounds based on user's input.
-    totalRounds = prompt(`Welcome to the rock, paper, scissors game created by Haakon Beck \nPlease indicate how many rounds you would like to play in total:`);
-
-    // For each round from 1 to totalRounds:
-    for (let index = 0; index < totalRounds; index++) {
-        // Ask the user to choose between Rock, Paper, or Scissors.
-        userChoice = parseInt(prompt(`Please choose one of the available options to play: \n1.Rock \n2.Paper \n3.Scissors`));
-        console.log(`Round ${index + 1} of ${totalRounds}`)
-        console.log(`User: ${choices[userChoice - 1]}`);
-        // Generate a random choice for the computer.
-        computerChoice = Math.floor(Math.random() * 3);
-        console.log(`Computer: ${choices[computerChoice]}`);
-        compareChosenOptions(userChoice, (computerChoice + 1));
-    }
-    showGameWinner(userScore, computerScore, tieCount);
-}
-
-while (keepPlaying) {
-    runGame();
-    // Ask the user if they want to play again.
-    //     If yes, reset all variables and repeat the game.
-    //     If no, end the game.
-    let anotherGame = parseInt(prompt(`Do you want to play again or leave? \n1.Play again \n2.Exit`));
-    if (anotherGame == 1) {
-        userChoice = 0;
-        computerChoice = 0;
-        totalRounds = 0;
-        userScore = 0;
-        computerScore = 0;
-        tieCount = 0;
-    } else {
-        keepPlaying = false;
+function handleUserChoice(chosenElement) {
+    //The data was not being obtained correctly with "chosenElement.dataset.choice", after debugging with the console it was discovered that the correct address was this "chosenElement.target.dataset.choice".
+    userChoice = chosenElement.target.dataset.choice;
+    computerChoice = rpsChoices[Math.floor(Math.random() * rpsChoices.length)];
+    compareChosenOptions(userChoice, computerChoice);
+    currentRound++;
+    if (currentRound == totalRounds) {
+        showGameWinner(userScore, computerScore, tieCount);
     }
 }
+
+function startNewGame() {
+    userChoice = "";
+    computerChoice = "";
+    currentRound = 0;
+    totalRounds = 0;
+    userScore = 0;
+    computerScore = 0;
+    tieCount = 0;
+    roundResult.textContent = "";
+    finalResult.textContent = "";
+    startButton.style.display = "none";
+    roundForm.style.display = "block";
+}
+
+choiceButtons.forEach(button => {
+    button.addEventListener("click", handleUserChoice);
+});
+roundForm.addEventListener("submit", handleRoundFormSubmit);
+startButton.addEventListener("click", startNewGame);
 
 // **GAME OVER**

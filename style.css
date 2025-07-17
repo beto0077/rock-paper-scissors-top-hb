@@ -16,20 +16,34 @@ main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
     border: 1px solid black;
 }
 
+.title-panel {
+    border: 1px solid black;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
 .game-panel {
     border: 1px solid black;
+    flex: 2;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .results-panel {
     border: 1px solid black;
-    display: none;
+    flex: 1;
+}
+
+.results-title {
+    /* display: none; */
 }
 
 .site-footer {
