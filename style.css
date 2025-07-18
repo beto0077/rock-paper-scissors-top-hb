@@ -1,15 +1,40 @@
+:root {
+    --hue: 260;
+    --text: oklch(25% 0.1 var(--hue));
+    --shadow: oklch(98% 0.1 var(--hue));
+    --highlight: oklch(100% 0.05 var(--hue));
+}
+
+/* :root {
+  --hue: 320;
+  --text: oklch(85% 0.1 var(--hue));
+  --shadow: oklch(25% 0.2 var(--hue));
+  --highlight: oklch(98% 0.05 var(--hue));
+} */
+
 * {
-    /* background-color: green; */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-image: linear-gradient( 90.5deg,  rgba(112,181,176,1) 1.9%, rgba(220,244,241,1) 87.7% );
 }
 
 body {
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    background-image: linear-gradient(90.5deg,rgba(112, 181, 176, 1) 1.9%,rgba(220, 244, 241, 1) 87.7%);
+    /* background-image: linear-gradient( 110.6deg,  rgba(4,20,51,1) 11.3%, rgba(239,238,249,1) 91.7% ); */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.highlighted-title {
+    font-size: 8vi;
+    letter-spacing: -0.05ch;
+    line-height: 1;
+    color: var(--text);
+    text-shadow:
+        0 .15ch 8px var(--shadow),
+        0 -2px 0 var(--highlight);
 }
 
 main {
@@ -17,33 +42,64 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid black;
+    height: 100vh;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 1em;
+}
+
+.logo {
+    padding: 0.5em;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.site-header p:nth-of-type(1) {
+    font-size: 24px;
+    font-weight: 900;
+    margin-left: 0.5em;
+    margin-right: auto;
 }
 
 .title-panel {
-    border: 1px solid black;
-    flex: 1;
+    flex: 0 0 25%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
 }
 
 .game-panel {
-    border: 1px solid black;
-    flex: 2;
+    flex: 0 0 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.results-panel {
-    border: 1px solid black;
-    flex: 1;
+.round-form {
+    text-align: center;
 }
 
-.results-title {
-    /* display: none; */
+.round-form #round-count {
+    margin: 1em;
+    width: 10em;
+}
+
+.results-panel {
+    flex: 0 0 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    gap: 1em;
 }
 
 .site-footer {
@@ -51,4 +107,220 @@ main {
     justify-content: center;
     align-items: center;
     padding: 2em;
+}
+
+/* CSS FOR BUTTONS */
+
+/* START BUTTON AND CONFIRM BUTTON */
+.button-85 {
+    padding: 0.6em 2em;
+    font-weight: 900;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+#start-button {
+    padding: 0.8em 3em;
+    font-size: 20px;
+}
+
+.button-85:before {
+    content: "";
+    background: linear-gradient(45deg,
+            #ff0000,
+            #ff7300,
+            #fffb00,
+            #48ff00,
+            #00ffd5,
+            #002bff,
+            #7a00ff,
+            #ff00c8,
+            #ff0000);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.button-85:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+/* RPS BUTTONS */
+/* From Uiverse.io by njesenberger ---- Edited and improved by Haakon Beck */
+.choice-button {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-82-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(2px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.button-82-edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(to left,
+            hsl(340deg 100% 16%) 0%,
+            hsl(340deg 100% 32%) 8%,
+            hsl(340deg 100% 32%) 92%,
+            hsl(340deg 100% 16%) 100%);
+}
+
+.button-82-front {
+    display: block;
+    position: relative;
+    padding: 12px 27px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: white;
+    background: hsl(345deg 100% 47%);
+    will-change: transform;
+    transform: translateY(-4px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+@media (min-width: 768px) {
+    .button-82-front {
+        font-size: 1.25rem;
+        padding: 12px 42px;
+    }
+}
+
+.choice-button:hover {
+    filter: brightness(110%);
+    -webkit-filter: brightness(110%);
+}
+
+.choice-button:hover .button-82-front {
+    transform: translateY(-6px);
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.choice-button:active .button-82-front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+.choice-button:hover .button-82-shadow {
+    transform: translateY(4px);
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.choice-button:active .button-82-shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+}
+
+.choice-button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.rock-button .button-82-front {
+    background: hsl(220, 100%, 50%);
+}
+
+.rock-button .button-82-edge {
+    background: linear-gradient(to left,
+            hsl(220, 100%, 20%) 0%,
+            hsl(220, 100%, 35%) 8%,
+            hsl(220, 100%, 35%) 92%,
+            hsl(220, 100%, 20%) 100%);
+}
+
+.rock-button .button-82-shadow {
+    background: hsl(220, 100%, 0% / 0.25);
+}
+
+.paper-button .button-82-front {
+    background: hsl(50, 100%, 50%);
+    color: black;
+}
+
+.paper-button .button-82-edge {
+    background: linear-gradient(to left,
+            hsl(50, 100%, 25%) 0%,
+            hsl(50, 100%, 40%) 8%,
+            hsl(50, 100%, 40%) 92%,
+            hsl(50, 100%, 25%) 100%);
+}
+
+.paper-button .button-82-shadow {
+    background: hsl(50, 100%, 0% / 0.25);
+}
+
+.scissors-button .button-82-front {
+    background: hsl(345deg 100% 47%);
+}
+
+.scissors-button .button-82-edge {
+    background: linear-gradient(to left,
+            hsl(340deg 100% 16%) 0%,
+            hsl(340deg 100% 32%) 8%,
+            hsl(340deg 100% 32%) 92%,
+            hsl(340deg 100% 16%) 100%);
+}
+
+.scissors-button .button-82-shadow {
+    background: hsl(0deg 0% 0% / 0.25);
 }
